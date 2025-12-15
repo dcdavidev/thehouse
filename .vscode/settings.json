@@ -1,5 +1,16 @@
 {
-    "editor.renderWhitespace": "boundary",
-    "python.formatting.provider": "black",
-    "cornflakes.linter.executablePath": ".venv/bin/flake8"
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.rulers": [88]
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[markdown]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+  }
 }

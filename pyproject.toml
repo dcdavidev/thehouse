@@ -1,32 +1,56 @@
-[tool.poetry]
+[project]
 name = "thehouse"
-version = "2.5.0"
-description = "A text-based game written in python"
-authors = ["Davide Di Criscito <davide.dicriscito@gmail.com>"]
-repository = "https://github.com/ctrlmaniac/the-house/"
+version = "3.0.0"
+description = "A text-based horror game"
+authors = [
+    {name = "Davide Di Criscito",email = "dcdavidev@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-license = "MIT"
+requires-python = ">=3.12"
 classifiers = [
     "Topic :: Games/Entertainment"
 ]
+dependencies = [
+]
 
-[tool.poetry.scripts]
-thehouse = "thehouse.play:play"
+[project.scripts]
+thehouse = "thehouse:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "isort (>=7.0.0,<8.0.0)",
+    "black (>=25.12.0,<26.0.0)"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\\.(py)$'
+exclude = '''
+/(
+        \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+)/
+'''
 
 [tool.isort]
 profile = "black"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-
-[tool.poetry.dev-dependencies]
-commitizen = "^2.27.1"
-black = "^22.3.0"
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-pydocstyle = "^6.1.1"
-toml = "^0.10.2"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true

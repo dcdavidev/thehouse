@@ -1,5 +1,27 @@
 {
-    "recommendations": [
-        "kevinglasson.cornflakes-linter"
-    ]
+  "recommendations": [
+    "bierner.emojisense",
+    "ms-python.black-formatter",
+    "joshbolduc.commitlint",
+    "ms-azuretools.vscode-containers",
+    "vivaxy.vscode-conventional-commits",
+    "ms-azuretools.vscode-docker",
+    "docker.docker",
+    "editorconfig.editorconfig",
+    "tamasfe.even-better-toml",
+    "jimeh.executable-on-save",
+    "github.vscode-github-actions",
+    "github.copilot",
+    "github.copilot-chat",
+    "bierner.github-markdown-preview",
+    "github.vscode-pull-request-github",
+    "bierner.markdown-preview-github-styles",
+    "ms-python.vscode-pylance",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.vscode-python-envs",
+    "rpinski.shebang-snippets",
+    "gruntfuggly.todo-tree",
+    "redhat.vscode-yaml"
+  ]
 }
