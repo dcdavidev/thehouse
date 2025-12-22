@@ -1,6 +1,6 @@
 [project]
 name = "thehouse"
-version = "3.0.0"
+version = "3.0.1"
 description = "A text-based horror game"
 authors = [
     {name = "Davide Di Criscito",email = "dcdavidev@gmail.com"}
