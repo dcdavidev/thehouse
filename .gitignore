@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+thehouse/helpers/constants.pyc
 *.py[cod]
 *$py.class
 

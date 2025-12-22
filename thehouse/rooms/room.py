@@ -14,6 +14,10 @@ class Room:
         self.player = player
         self.thehouse = thehouse
 
+    def __str__(self):
+        """Return the name of the room."""
+        return self.__class__.__name__.lower()
+
     def blueprint(self) -> None:
         """Print all sides of the room.
 
@@ -21,41 +25,41 @@ class Room:
         """
         pass
 
-    def right(self) -> None:
+    def right(self) -> str:
         """Print content of the right side of the room."""
-        pass
+        return str(self)
 
-    def left(self) -> None:
-        """Print content of the left side of the room."""
-        pass
+    def left(self) -> str:
+        """Print content of the left side of theroom."""
+        return str(self)
 
-    def backward(self) -> None:
+    def backward(self) -> str:
         """Print content of the back side of the room."""
-        pass
+        return str(self)
 
-    def forward(self):
+    def forward(self) -> str:
         """Print content of the front side of the room."""
-        pass
+        return str(self)
 
-    def move(self) -> None:
+    def move(self) -> str:
         """Let the user move inside or outside the room."""
-        print_pause("Where do you want to go?")
+        while True:
+            print_pause("Where do you want to go?")
 
-        choice = validate_input(
-            'Type "forward", "right", "backward", "left", "help", "items": ',
-            ["right", "left", "forward", "backward", "help", "items"],
-        )
+            choice = validate_input(
+                'Type "forward", "right", "backward", "left", "help", "items": ',
+                ["right", "left", "forward", "backward", "help", "items"],
+            )
 
-        if choice == "right":
-            self.right()
-        elif choice == "left":
-            self.left()
-        elif choice == "backward":
-            self.backward()
-        elif choice == "forward":
-            self.forward()
-        elif choice == "help":
-            self.blueprint()
-        elif choice == "items":
-            self.player.print_items()
-            self.move()
+            if choice == "right":
+                return self.right()
+            elif choice == "left":
+                return self.left()
+            elif choice == "backward":
+                return self.backward()
+            elif choice == "forward":
+                return self.forward()
+            elif choice == "help":
+                self.blueprint()
+            elif choice == "items":
+                self.player.print_items()

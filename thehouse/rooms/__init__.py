@@ -7,7 +7,6 @@ from .kitchen import Kitchen
 from .livingroom import Livingroom
 from .studio import Studio
 
-
 __all__ = [
     "Bedroom",
     "Diningroom",

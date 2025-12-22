@@ -2,6 +2,6 @@
 
 Type python -m thehouse and the game will run.
 """
-from thehouse.play import play
+from thehouse.play import main
 
-play()
+main()

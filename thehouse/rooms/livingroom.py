@@ -1,15 +1,17 @@
-"""Livingroom.
+"""Living Room.
 
 Sides:
-- FORWARD: safe.
-- RIGHT: door to the halllway.
-- BACKWARD: window.
-- LEFT: window.
+- FORWARD: safe
+- RIGHT: door to the hallway
+- BACKWARD: window
+- LEFT: window
 """
+
 import random
 
 from thehouse.characters import Monster
 from thehouse.helpers import print_pause, validate_input
+from thehouse.helpers.constants import HOUSE_KEY_3, KNIFE, PASSEPARTOUT
 
 from .room import Room
 
@@ -29,30 +31,26 @@ class Livingroom(Room):
         self.safe_open = False
         self.safe_combination = random.randint(1, 9999)
 
-    def __str__(self):
-        """Return name of the room."""
-        return "Livingroom"
-
     def blueprint(self) -> None:
         """Print blueprint of the room."""
         print_pause("- In front of you there's a painting.")
         print_pause("- On your right there's a door.")
         print_pause("- On your back there's a window.")
         print_pause("- On your left there's another window.")
-        self.move()
 
     def center(self):
         """Print welcome message."""
         if self.monster.is_alive:
             print_pause("There's a terrible monster!")
-            print_pause("It's half human and half something undescribable!")
+            print_pause("It's half human and half something indescribable!")
             print_pause(
-                "Luckly it's slow, but one of its sort of tentacle tries to grab you!"
+                "Luckily, it's slow, but one of its tentacles tries to grab you!"
             )
-            self.fight_or_escape()
+            return self.fight_or_escape()
         else:
             print_pause("You're in the livingroom!")
             self.blueprint()
+            return self.move()
 
     def fight_or_escape(self):
         """Let user chose where to fight or escape."""
@@ -60,16 +58,16 @@ class Livingroom(Room):
         choice = validate_input("Type fight or escape: ", ["fight", "escape"])
 
         if choice == "fight":
-            self.fight()
+            return self.fight()
         else:
-            self.escape()
+            return self.escape()
 
     def fight(self):
         """Let the user fight the monster."""
-        while self.monster.is_alive:
+        if self.monster.is_alive and self.player.is_alive:
             print_pause("It's your turn to deal damages!")
 
-            if "KNIFE" not in self.player.items:
+            if KNIFE not in self.player.items:
                 damage = 1
                 print_pause("It seems like you need something to deal more damages!")
             else:
@@ -83,24 +81,16 @@ class Livingroom(Room):
                 self.monster.deal_damage()
 
                 if self.player.is_alive:
-                    choice = validate_input(
-                        "Type fight or escape: ", ["fight", "escape"]
-                    )
-
-                    if choice == "fight":
-                        self.fight()
-                        break
-                    else:
-                        self.escape()
-                        break
+                    return self.fight_or_escape()
                 else:
-                    break
+                    return str(self)
             else:
                 print_pause("You successfully killed the monster!")
                 print_pause("The monster has dropped a key.")
-                self.player.pick_an_item("PASSEPARTOUT")
+                self.player.pick_an_item(PASSEPARTOUT)
                 self.thehouse.rooms["studio"].door_locked = False
-                self.center()
+                return self.center()
+        return str(self)
 
     def escape(self):
         """Let the user try to escape the monster."""
@@ -111,76 +101,77 @@ class Livingroom(Room):
         )
 
         if int(choice) == random.randint(1, 6):
-            print_pause("You successfully escaped the moster!!")
-            self.thehouse.rooms["hallway"].center()
+            print_pause("You successfully escaped the monster!")
+            return "hallway"
         else:
-            print_pause("You panic and can't escape the fight!")
+            print_pause("You panic and can't escape the fight.")
             self.tries -= 1
 
             if self.tries <= 0:
                 print_pause("The monster has reached you!")
-                self.monster.deals_damage()
+                self.monster.deal_damage()
                 self.tries = random.randint(3, 6)
 
                 if self.player.is_alive:
-                    self.fight_or_escape()
+                    return self.fight_or_escape()
+                else:
+                    return str(self)
             else:
-                self.fight_or_escape()
+                return self.fight_or_escape()
 
     def right(self):
         """Move the user towards the hallway."""
         print_pause("You open the door and enter the room.")
-        self.thehouse.rooms["hallway"].center()
+        return "hallway"
 
     def backward(self):
         """Move the user towards the window."""
-        print_pause("There's a window and you look outside!")
-        print_pause("There's a car! Maybe you can use it to run away from this house!")
+        print_pause("There's a window and you look outside.")
+        print_pause("There's a car! Maybe you can use it to escape from this house!")
         print_pause("You go back.")
-
-        self.move()
+        return str(self)
 
     def left(self):
         """Move the user towards left."""
-        print_pause("There's a balcony!")
-        print_pause("Outside there's a garden.")
-        print_pause("The low lights make the garden look like a bleak place.")
+        print_pause("There's a balcony.")
+        print_pause("Outside, there's a garden.")
+        print_pause("The low lights make the garden look bleak.")
         print_pause("You go back.")
-
-        self.move()
+        return str(self)
 
     def forward(self):
         """Move the user towards the safe."""
         if self.safe_open:
             print_pause("You opened the safe already and picked THE HOUSE KEY 3.")
             print_pause("You go back.")
+            return str(self)
         else:
             print_pause("There's a painting...")
-            print_pause("You look closely and there's something behind it!")
+            print_pause("You look closely and see there's something behind it!")
             print_pause("You move the painting and reveal a safe!")
-            print_pause("Maybe you can break open it!")
+            print_pause("Maybe you can break it open!")
 
-            self.break_open()
+            return self.break_open()
 
     def break_open(self):
         """Let the user break open the safe."""
         print_pause("You need a combination!")
 
-        choice = validate_input(
-            "Pick a combination between 0000 and 9999 included, or type back: ",
-            [str(self.safe_combination), "back"],
-        )
+        while True:
+            choice = validate_input(
+                "Pick a combination between 0000 and 9999 included, or type back: ",
+                [str(self.safe_combination), "back"],
+            )
 
-        if choice == "back":
-            self.center()
-        else:
-            if int(choice) == self.safe_combination:
-                print_pause("You successfully opened the safe!")
-                print_pause("Inside there's a key!")
-                self.player.pick_an_item("THE HOUSE KEY 3")
-                self.safe_open = True
-
-                self.move()
+            if choice == "back":
+                return str(self)
             else:
-                print_pause("The combination is wrong! Try again!")
-                self.break_open()
+                if int(choice) == self.safe_combination:
+                    print_pause("You successfully opened the safe!")
+                    print_pause("Inside, there's a key!")
+                    self.player.pick_an_item(HOUSE_KEY_3)
+                    self.safe_open = True
+
+                    return str(self)
+                else:
+                    print_pause("The combination is wrong! Try again!")

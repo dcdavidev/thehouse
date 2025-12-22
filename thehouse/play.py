@@ -1,23 +1,22 @@
 """This module is responsible of initializing the game."""
 from thehouse.characters import Player
+from thehouse.helpers import print_pause, validate_input
 from thehouse.thehouse import TheHouse
-from thehouse.helpers import validate_input, print_pause
 
 
-def play():
-    player = Player()
-    game = TheHouse(player)
+def main():
+    while True:
+        player = Player()
+        game = TheHouse(player)
 
-    game.play()
+        game.play()
 
-    print_pause("Do you want to play again?")
-    choice = validate_input("Type yes or no: ", ["yes", "no"])
+        print_pause("Do you want to play again?")
+        choice = validate_input("Type yes or no: ", ["yes", "no"])
 
-    if choice == "yes":
-        play()
-    else:
-        quit()
+        if choice == "no":
+            break
 
 
 if __name__ == "__main__":
-    play()
+    main()
