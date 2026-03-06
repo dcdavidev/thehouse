@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'CHANGELOG.md'
-      - 'pyproject.toml'
-      - 'thehouse/__init__.py'
 
 jobs:
   release:
