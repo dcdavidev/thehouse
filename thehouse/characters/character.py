@@ -1,6 +1,8 @@
 """Character blueprint."""
 import random
 
+from rich.text import Text
+
 from thehouse.helpers import print_pause
 
 
@@ -23,6 +25,9 @@ class Character:
         :param damage: the amount of damage as integer the character takes.
         """
         self.health -= damage
+        # Sound the terminal bell ONLY on damage
+        if damage > 0:
+            print("\a", end="", flush=True)
         self.print_health()
 
     def restore_health(self) -> None:
@@ -32,7 +37,12 @@ class Character:
 
     def print_health(self) -> None:
         """Print a bar with the current health."""
-        health = "*" * self.health
+        # Use rich Text for health bar coloring
+        health_stars = "*" * self.health
         pt_lost = "-" * (self.max_health - self.health)
-        print_pause(f"Health: {health}{pt_lost}")
-
+        
+        health_text = Text("Health: ", style="bold")
+        health_text.append(health_stars, style="red")
+        health_text.append(pt_lost, style="dim")
+        
+        print_pause(health_text)

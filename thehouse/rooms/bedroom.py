@@ -29,34 +29,34 @@ class Bedroom(Room):
 
     def blueprint(self) -> None:
         """Print the blueprint of the room."""
-        print_pause("- In front of you, there's a dresser.")
-        print_pause("- On your right, there's a window.")
-        print_pause("- Behind you, there's a bed.")
-        print_pause("- On your left, there's a door.")
+        print_pause(
+            [
+                "- In front of you, there is a dresser.",
+                "- On your right, there is a window.",
+                "- Behind you, there is a bed.",
+                "- On your left, there is a door.",
+            ]
+        )
 
     def center(self):
         """Print welcome message."""
-        print_pause("You're in the bedroom!")
+        print_pause("You are in the bedroom!")
         self.blueprint()
         return self.move()
 
     def left(self):
         """Move player to the left side of the room."""
-        print_pause("You open the door and enter the room.")
+        print_pause("You open the door and enter the hallway.")
         return "hallway"
 
     def backward(self):
         """Move player to the back side of the room."""
-        print_pause("You look tired.")
-        print_pause("Do you want to rest a little?")
+        print_pause(["You look tired.", "Do you want to rest a little?"])
 
         choice = validate_input("Type yes or no: ", ["yes", "no"])
 
         if choice == "yes":
-            print_pause("You decide to rest.", 2)
-            print_pause(".", 2)
-            print_pause(".", 2)
-            print_pause(".", 2)
+            print_pause(["You decide to rest.", ".", ".", "."], 2)
             self.player.restore_health()
         else:
             print_pause("You go back.")
@@ -65,34 +65,47 @@ class Bedroom(Room):
 
     def right(self):
         """Print content of the right side of the room."""
-        print_pause("You look out the window.")
-        print_pause("Outside, it's pitch black!")
-        print_pause("Something is moving in the darkness.")
-        print_pause("It's moving so fast that you can barely see it...")
-        print_pause("You wonder how you could escape this house.")
-        print_pause("And if it's even safe outside...", 3)
-        print_pause("You go back.")
+        print_pause(
+            [
+                "You look out the window.",
+                "Outside, it is pitch black!",
+                "Something is moving in the darkness.",
+                "It moves so fast that you can barely see it...",
+                "You wonder how you can escape this house.",
+                "And if it is even safe outside...",
+                "You go back.",
+            ],
+            3,
+        )
 
         return str(self)
 
     def forward(self):
         """Print content of the front side of the room."""
-        print_pause("There are five drawers.")
-        print_pause("1. Open the first.")
-        print_pause("2. Open the second.")
-        print_pause("3. Open the third.")
-        print_pause("4. Open the fourth.")
-        print_pause("5. Open the fifth.")
-
+        print_pause(["There are five drawers."])
         return self.pick_a_drawer()
 
     def pick_a_drawer(self):
         """Let the user pick a drawer."""
+        # Mapping labels to drawer numbers
+        drawer_options = {
+            "Open 1st drawer": 1,
+            "Open 2nd drawer": 2,
+            "Open 3rd drawer": 3,
+            "Open 4th drawer": 4,
+            "Open 5th drawer": 5,
+            "You give up": "back",
+        }
+
         while self.player.is_alive:
-            choice = validate_input(
-                "Type a number between 1 and 5 included, or back: ",
-                ["1", "2", "3", "4", "5", "back"],
+            choice_label = validate_input(
+                "Choose wisely: ",
+                list(drawer_options.keys()),
             )
+
+            # Get the internal value from the mapping
+            selected_key = next(k for k in drawer_options if k.lower() == choice_label)
+            choice = drawer_options[selected_key]
 
             if choice == "back":
                 print_pause("You go back to the center of the room.")
@@ -102,15 +115,23 @@ class Bedroom(Room):
                     "There are some clothes in it. You dig through them to find something..."
                 )
 
-                if int(choice) == self.key_in_drawer:
+                if choice == self.key_in_drawer:
                     if HOUSE_KEY_1 in self.player.items:
-                        print_pause("You've already picked a key from this drawer!")
-                        print_pause("There's nothing more in it.")
+                        print_pause(
+                            [
+                                "You already found a key in this drawer!",
+                                "There is nothing more in it.",
+                            ]
+                        )
                     else:
-                        print_pause("You've found a key!")
+                        print_pause("You find a key!")
                         self.player.pick_an_item(HOUSE_KEY_1)
                 else:
-                    print_pause("There's nothing between the clothes.")
-                    print_pause("Something outside is moving...")
+                    print_pause(
+                        [
+                            "There is nothing among the clothes.",
+                            "Something outside is moving...",
+                        ]
+                    )
                     self.player.lose_health()
         return str(self)

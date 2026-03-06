@@ -30,34 +30,41 @@ class Kitchen(Room):
 
     def blueprint(self) -> None:
         """Print the blueprint of the room."""
-        print_pause("- In front of you, there's a window.")
-        print_pause("- On your right, there's a door.")
-        print_pause("- Behind you, there are some kitchen drawers.")
-        print_pause("- On your left, there are more kitchen drawers.")
+        print_pause(
+            [
+                "- In front of you, there is a window.",
+                "- On your right, there is a door.",
+                "- Behind you, there are some kitchen drawers.",
+                "- On your left, there are more kitchen drawers.",
+            ]
+        )
 
     def center(self):
         """Print a welcome message."""
-        print_pause("You're in the kitchen!")
+        print_pause("You are in the kitchen!")
         self.blueprint()
         return self.move()
 
     def forward(self):
         """Print the content of the front side of the room."""
-        print_pause("You look out the window.")
-        print_pause("There's nothing to see...")
-        print_pause("You go back.")
+        print_pause(
+            [
+                "You look out of the window.",
+                "There is nothing but darkness to see...",
+                "You go back.",
+            ]
+        )
         return str(self)
 
     def right(self):
         """Move the player to the hall."""
+        print_pause("You open the door and enter the hall.")
         return "hall"
 
     def _search_drawers(self, wall):
-        print_pause("There are three drawers. You know you have to look into them all.")
-        print_pause("1. Open the first.")
-        print_pause("2. Open the second.")
-        print_pause("3. Open the third.")
-
+        print_pause(
+            ["There are three drawers here. You decide to check them all."]
+        )
         return self.pick_a_drawer(wall)
 
     def left(self):
@@ -73,24 +80,39 @@ class Kitchen(Room):
 
         :param wall: the wall where the knife is located.
         """
+        drawer_options = {
+            "Open the 1st drawer": 1,
+            "Open the 2nd drawer": 2,
+            "Open the 3rd drawer": 3,
+            "Nevermind...": "back",
+        }
+
         while True:
-            choice = validate_input(
-                "Type a number between 1 and 3 included, or back: ",
-                ["1", "2", "3", "back"],
+            choice_label = validate_input(
+                "Which drawer do you want to open?",
+                list(drawer_options.keys()),
             )
+
+            # Get the internal value from the mapping
+            selected_key = next(k for k in drawer_options if k.lower() == choice_label)
+            choice = drawer_options[selected_key]
 
             if choice == "back":
                 print_pause("You go back to the center of the room.")
                 return str(self)
             else:
-                print_pause("There are some tools. Let's find something useful!")
+                print_pause("You dig through the kitchen tools, looking for something useful.")
 
-                if wall == self.knife_on_wall and int(choice) == self.knife_in_drawer:
+                if wall == self.knife_on_wall and choice == self.knife_in_drawer:
                     if KNIFE in self.player.items:
-                        print_pause("You've already picked a KNIFE from this drawer!")
-                        print_pause("There's nothing else in it.")
+                        print_pause(
+                            [
+                                "You already have the knife from this drawer.",
+                                "There is nothing else inside.",
+                            ]
+                        )
                     else:
-                        print_pause("You've found a KNIFE!")
+                        print_pause("You find a KNIFE!")
                         self.player.pick_an_item(KNIFE)
                 else:
-                    print_pause("There's nothing useful here...")
+                    print_pause("You find nothing but old silverware and rusty tools.")

@@ -28,69 +28,87 @@ class Diningroom(Room):
 
     def blueprint(self) -> None:
         """Print the blueprint of the room."""
-        print_pause("- Forward there's a corpse!")
-        print_pause("- On your right there's another corpse!")
-        print_pause("- On your back there's a third corpse!")
-        print_pause("- On your left there's a door.")
+        print_pause(
+            [
+                "- In front of you, there is a corpse!",
+                "- On your right, there is another corpse!",
+                "- Behind you, there is a third corpse!",
+                "- On your left, there is a door.",
+            ]
+        )
 
     def center(self):
         """Print a welcome message."""
-        print_pause("You're in the dining room!")
-        print_pause("There's a bloody mess here...")
-        print_pause("Someone or something has killed three people!")
+        print_pause(
+            [
+                "You are in the dining room!",
+                "There is a bloody mess here...",
+                "Someone or something killed three people!",
+            ]
+        )
         self.blueprint()
         return self.move()
 
     def forward(self):
         """Describe the corpse."""
-        print_pause("Something has smashed its head!")
-        print_pause("There's a lot of blood and a strange material on the corpse.")
-        print_pause("You check its pockets.")
+        print_pause(
+            [
+                "Something smashed its head!",
+                "There is a lot of blood and a strange material on the corpse.",
+                "You check its pockets.",
+            ]
+        )
 
         if self.key_in_corpse == "forward":
             if HOUSE_KEY_2 in self.player.items:
-                print_pause("You already checked its pocket and found a key!")
-                print_pause("You go back!")
+                print_pause(
+                    ["You already checked its pockets and found a key.", "You go back."]
+                )
             else:
-                print_pause("You have found a key!")
+                print_pause("You find a key!")
                 self.player.pick_an_item(HOUSE_KEY_2)
         else:
-            print_pause("There's nothing inside its pocket. You go back.")
+            print_pause("There is nothing inside its pockets. You go back.")
 
         return str(self)
 
     def right(self):
         """Describe the corpse."""
-        print_pause("Something has ripped its arms off!")
-        print_pause("You check its pocket.")
+        print_pause(["Something ripped its arms off!", "You check its pockets."])
 
         if self.key_in_corpse == "left":
             if HOUSE_KEY_2 in self.player.items:
-                print_pause("You already checked its pocket and found a key!")
-                print_pause("You go back!")
+                print_pause(
+                    ["You already checked its pockets and found a key.", "You go back."]
+                )
             else:
-                print_pause("You have found a key!")
+                print_pause("You find a key!")
                 self.player.pick_an_item(HOUSE_KEY_2)
         else:
-            print_pause("There's nothing inside its pocket. You go back.")
+            print_pause("There is nothing inside its pockets. You go back.")
 
         return str(self)
 
     def backward(self):
         """Describe the corpse."""
-        print_pause("There's a huge hole inside the chest of the corpse.")
-        print_pause("Something has ripped its heart out!")
-        print_pause("You check its pocket.")
+        print_pause(
+            [
+                "There is a huge hole inside the chest of the corpse.",
+                "Something ripped its heart out!",
+                "You check its pockets.",
+            ]
+        )
 
         if self.key_in_corpse == "backward":
             if HOUSE_KEY_2 in self.player.items:
-                print_pause("You already checked its pocket and found a key!")
-                print_pause("You go back!")
+                print_pause(
+                    ["You already checked its pockets and found a key.", "You go back."]
+                )
             else:
-                print_pause("You have found a key!")
+                print_pause("You find a key!")
                 self.player.pick_an_item(HOUSE_KEY_2)
         else:
-            print_pause("There's nothing inside its pocket. You go back.")
+            print_pause("There is nothing inside its pockets. You go back.")
 
         return str(self)
 

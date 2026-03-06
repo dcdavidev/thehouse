@@ -5,6 +5,7 @@ It uses the print_pause funtion
 """
 
 import random
+from rich.text import Text
 
 from .print_pause import print_pause
 
@@ -17,5 +18,6 @@ DEATHS = [
 
 def random_death():
     """Print a random death from DEATHS variable."""
-    print_pause(random.choice(DEATHS), 3)
-    print_pause("\n\n=== GAME OVER ===\n\n")
+    death_msg = random.choice(DEATHS)
+    print_pause(Text(death_msg, style="red"), 3)
+    print_pause(Text("\n\n=== GAME OVER ===\n\n", style="bold blink red"))

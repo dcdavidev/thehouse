@@ -21,35 +21,47 @@ class Room:
     def blueprint(self) -> None:
         """Print all sides of the room.
 
-        This method will be called if user type "help".
+        This method is called if the user chooses 'help'.
         """
         pass
 
     def right(self) -> str:
-        """Print content of the right side of the room."""
+        """Print the content of the right side of the room."""
         return str(self)
 
     def left(self) -> str:
-        """Print content of the left side of theroom."""
+        """Print the content of the left side of the room."""
         return str(self)
 
     def backward(self) -> str:
-        """Print content of the back side of the room."""
+        """Print the content of the back side of the room."""
         return str(self)
 
     def forward(self) -> str:
-        """Print content of the front side of the room."""
+        """Print the content of the front side of the room."""
         return str(self)
 
     def move(self) -> str:
         """Let the user move inside or outside the room."""
-        while True:
-            print_pause("Where do you want to go?")
+        # Map descriptive labels to move actions
+        move_options = {
+            "Go forward": "forward",
+            "Go right": "right",
+            "Go backward": "backward",
+            "Go left": "left",
+            "Check the room (Help)": "help",
+            "Check your pockets (Items)": "items",
+        }
 
-            choice = validate_input(
-                'Type "forward", "right", "backward", "left", "help", "items": ',
-                ["right", "left", "forward", "backward", "help", "items"],
+        while True:
+            choice_label = validate_input(
+                "Where do you want to go?",
+                list(move_options.keys()),
             )
+
+            # Get the internal value from the mapping
+            selected_key = next(k for k in move_options if k.lower() == choice_label)
+            choice = move_options[selected_key]
 
             if choice == "right":
                 return self.right()

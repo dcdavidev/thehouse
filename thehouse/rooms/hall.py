@@ -18,10 +18,14 @@ class Hall(Room):
 
     def blueprint(self) -> None:
         """Print blueprint of the house."""
-        print_pause("- In front of you there's the main door of the house.")
-        print_pause("- On your right there's a door.")
-        print_pause("- Backwards there's the hallway.")
-        print_pause("- On your left there's another door.")
+        print_pause(
+            [
+                "- In front of you there's the main door of the house.",
+                "- On your right there's a door.",
+                "- Backwards there's the hallway.",
+                "- On your left there's another door.",
+            ]
+        )
 
     def center(self):
         """Print welcome message."""
@@ -53,7 +57,8 @@ class Hall(Room):
             print_pause("You unlock the door and finally exit the house!")
             self.player.escaped = True
         else:
-            print_pause("You need three keys to open the door!")
-            print_pause("You go back.")
+            print_pause(
+                ["You need three keys to open the door!", "You go back."]
+            )
 
         return str(self)

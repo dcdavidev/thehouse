@@ -18,10 +18,14 @@ class Hallway(Room):
 
     def blueprint(self) -> None:
         """Print the blueprint of the room."""
-        print_pause("- In front of you there's the hall of the house.")
-        print_pause("- On your right there's a little table and a door.")
-        print_pause("- Behind you there's a door.")
-        print_pause("- On your left there's a door and two paintings.")
+        print_pause(
+            [
+                "- In front of you, there is the hall of the house.",
+                "- On your right, there is a small table and a door.",
+                "- Behind you, there is a door.",
+                "- On your left, there is a door and two paintings.",
+            ]
+        )
 
     def center(self):
         """Print welcome message and blueprint."""
@@ -34,12 +38,16 @@ class Hallway(Room):
         studio = self.thehouse.rooms["studio"]
 
         if studio.door_locked or PASSEPARTOUT not in self.player.items:
-            print_pause("The door is locked!")
-            print_pause("It seems you have to find the key!")
-            print_pause("You go back.")
+            print_pause(
+                [
+                    "The door is locked!",
+                    "It seems you need to find a key.",
+                    "You go back.",
+                ]
+            )
             return str(self)
         else:
-            print_pause("You open the door and enter the room.")
+            print_pause("You open the door and enter the studio.")
             return "studio"
 
     def forward(self):
@@ -49,27 +57,45 @@ class Hallway(Room):
     def right(self):
         """Move player to the bedroom."""
         if PASSEPARTOUT not in self.player.items:
-            print_pause("There's a little table and a door.")
-            print_pause("Do you want to open the door or check the table?")
+            print_pause(
+                [
+                    "There is a small table and a door.",
+                    "What do you want to do?",
+                ]
+            )
 
-            choice = validate_input('Type "table" or "door": ', ["table", "door"])
+            # Using descriptive labels for the radio boxes
+            choices_map = {
+                "Check the table": "table",
+                "Open the door": "door",
+            }
+
+            choice_label = validate_input(
+                "Your choice: ",
+                list(choices_map.keys()),
+            )
+
+            # Get the internal value from the mapping
+            selected_key = next(k for k in choices_map if k.lower() == choice_label)
+            choice = choices_map[selected_key]
 
             if choice == "door":
-                print_pause("You open the door and enter the room.")
+                print_pause("You open the door and enter the bedroom.")
                 return "bedroom"
             else:
                 return self.table()
         else:
-            print_pause("You open the door and enter the room.")
+            print_pause("You open the door and enter the bedroom.")
             return "bedroom"
 
     def table(self):
         """Let the user check if there's something inside the table."""
-        print_pause("You open the drawer and find but there's nothing inside.")
-        print_pause("You go back.")
+        print_pause(
+            ["You open the drawer and find that it is empty.", "You go back."]
+        )
         return str(self)
 
     def left(self):
         """Move player to the livingroom."""
-        print_pause("You open the door and enter the room.")
+        print_pause("You open the door and enter the living room.")
         return "livingroom"
