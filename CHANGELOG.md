@@ -1,9 +1,3 @@
-## 2.6.2 (2026-03-06)
-
-### Fix
-
-- ensure automated release pushes both commits and tags
-
 ## 2.6.1 (2026-03-06)
 
 ### Fix

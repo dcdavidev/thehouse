@@ -71,8 +71,7 @@ tag_format = "$version"
 update_changelog_on_bump = true
 major_version_zero = false
 version_files = [
-    "pyproject.toml:version",
-    "thehouse/__init__.py:__version__"
+    "pyproject.toml:version"
 ]
 bump_message = "bump: version $current_version → $new_version"
 bump_pattern = "^(feat|fix|refactor|perf|ci|chore)"
