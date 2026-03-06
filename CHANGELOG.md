@@ -1,3 +1,9 @@
+## 2.7.1 (2026-03-06)
+
+### Fix
+
+- ensure version bump even for CI updates and metadata changes
+
 ## 2.7.0 (2026-03-06)
 
 ### Feat
