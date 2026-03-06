@@ -1,6 +1,6 @@
 [project]
 name = "thehouse"
-version = "2.6.2"
+version = "2.6.1"
 description = "A text-based horror game"
 authors = [
     {name = "Davide Di Criscito",email = "dcdavidev@gmail.com"}
@@ -62,15 +62,18 @@ ensure_newline_before_comments = true
 
 [tool.poe.tasks]
 play = "python -m thehouse"
-release = "cz bump --changelog --yes"
+release = "cz bump --changelog --check-consistency --yes"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "2.6.1"
 tag_format = "$version"
-annotated_tag = true
+update_changelog_on_bump = true
+major_version_zero = false
 version_files = [
-
     "pyproject.toml:version",
     "thehouse/__init__.py:__version__"
 ]
+bump_message = "bump: version $current_version → $new_version [skip ci]"
+bump_pattern = "^(feat|fix|refactor|perf|ci|chore)"
+change_type_map = {"feat" = "Feat", "fix" = "Fix", "refactor" = "Refactor", "perf" = "Perf", "ci" = "CI", "chore" = "Chore"}
