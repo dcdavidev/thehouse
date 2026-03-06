@@ -3,10 +3,11 @@
 This function will validate text input.
 """
 import questionary
-from termcolor import colored
+from pyfiglet import Figlet
+from rich.text import Text
+from rich.console import Console
 
-from .print_pause import print_pause
-
+console = Console()
 
 def validate_text_input(prompt):
     """Validate the text input from the user using questionary."""
@@ -14,10 +15,14 @@ def validate_text_input(prompt):
         answer = questionary.text(prompt).ask()
 
         if answer is None:
-            print_pause(colored("Goodbye!", "yellow"))
+            f = Figlet(font="catwalk")
+            goodbye_text = f.renderText("BYE")
+            console.print(Text(goodbye_text, style="bold yellow"))
             quit()
 
         return answer
     except KeyboardInterrupt:
-        print_pause(colored("\nGoodbye!", "yellow"))
+        f = Figlet(font="catwalk")
+        goodbye_text = f.renderText("BYE")
+        console.print(Text(f"\n{goodbye_text}", style="bold yellow"))
         quit()
