@@ -67,6 +67,7 @@ release = "cz bump --changelog --yes"
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "2.6.0"
+tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
     "thehouse/__init__.py:__version__"
