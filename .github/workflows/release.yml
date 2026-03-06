@@ -48,4 +48,5 @@ jobs:
 
       - name: Push changes and tags
         run: |
+          git pull origin main --rebase --tags
           git push origin main --tags
