@@ -1,6 +1,6 @@
 [project]
 name = "thehouse"
-version = "2.6.1"
+version = "2.6.2"
 description = "A text-based horror game"
 authors = [
     {name = "Davide Di Criscito",email = "dcdavidev@gmail.com"}
@@ -66,7 +66,7 @@ release = "cz bump --changelog --yes"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "2.6.1"
+version = "2.6.2"
 tag_format = "$version"
 version_files = [
     "pyproject.toml:version",
