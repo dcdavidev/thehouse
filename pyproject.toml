@@ -62,7 +62,7 @@ ensure_newline_before_comments = true
 
 [tool.poe.tasks]
 play = "python -m thehouse"
-release = "cz bump --changelog --yes"
+release = "cz bump --changelog --yes --allow-no-commit"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
