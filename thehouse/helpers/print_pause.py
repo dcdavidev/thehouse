@@ -3,6 +3,7 @@
 This function will print a message and then it will pause the terminal
 """
 
+import sys
 import time
 from pyfiglet import Figlet
 from rich.console import Console
@@ -56,4 +57,4 @@ def print_pause(content, sleep=1):
         f = Figlet(font="catwalk")
         banner = f.renderText("BYE")
         console.print(Text(banner, style="bold yellow"))
-        quit()
+        sys.exit(0)
