@@ -1,3 +1,18 @@
+## 2.7.0 (2026-03-06)
+
+### Feat
+
+- trigger release cycle
+
+### Fix
+
+- resolve version inconsistencies and remove redundant __version__ from __init__.py
+- handle non-interactive environments and update README
+- use rebase before pushing release to handle concurrent changes
+- simplify release process and ensure tags are pushed
+- explicit tag pushing and enable annotated tags
+- ensure automated release pushes both commits and tags
+
 ## 2.6.1 (2026-03-06)
 
 ### Fix
